@@ -1,21 +1,33 @@
 from rest_framework import viewsets
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
 from .models import Portfolio
 from .serializers import PortfolioSerializer
 
-from rest_framework.filters import SearchFilter
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.permissions import IsAuthenticated
 
 class PortfolioViewSet(viewsets.ModelViewSet):
-    queryset = Portfolio.objects.all()
+    queryset = Portfolio.objects.all().order_by('id')
     serializer_class = PortfolioSerializer
-    permission_classes = [IsAuthenticated]
-    
-    filter_backends = [DjangoFilterBackend, SearchFilter]
-    filterset_fields = ['technology']
-    
+
+    # permission_classes = [IsAuthenticated]
+
+    filter_backends = [
+        DjangoFilterBackend,
+        SearchFilter,
+        OrderingFilter,
+    ]
+
+    filterset_fields = [
+        'created_at',
+    ]
+
     search_fields = [
-    'title',
-    'description',
-    'technology'
+        'title',
+        'description',
+    ]
+
+    ordering_fields = [
+        'title',
+        'created_at',
     ]
