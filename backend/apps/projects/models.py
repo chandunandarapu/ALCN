@@ -19,13 +19,14 @@ class Project(models.Model):
         related_name="projects"
     )
 
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, db_index=True)
 
     description = models.TextField(blank=True, null=True)
 
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
+        db_index=True,
         default="pending"
     )
 

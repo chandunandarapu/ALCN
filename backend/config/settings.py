@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     'apps.tasks',
     'apps.portfolio',
     'django_filters',
+    'apps.dashboard',
+    'drf_yasg',
+    'rest_framework_simplejwt',
+    'apps.reports',
 ]
 
 REST_FRAMEWORK = {
@@ -151,3 +155,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 AUTH_USER_MODEL = 'users.User'
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
