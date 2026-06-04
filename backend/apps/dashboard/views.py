@@ -2,14 +2,33 @@ from datetime import date
 
 from django.db.models import Count
 from django.db.models.functions import ExtractMonth
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from apps.projects.models import Project
 from apps.tasks.models import Task
 
 
+class DashboardHomeAPIView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response({
+            "monthly_projects": "/api/dashboard/monthly-projects/",
+            "monthly_tasks": "/api/dashboard/monthly-tasks/",
+            "project_status": "/api/dashboard/project-status/",
+            "task_status": "/api/dashboard/task-status/",
+            "overdue_tasks": "/api/dashboard/overdue-tasks/",
+            "high_priority_tasks": "/api/dashboard/high-priority-tasks/",
+        })
+
+
 class MonthlyProjectsAPIView(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
 
@@ -26,6 +45,8 @@ class MonthlyProjectsAPIView(APIView):
 
 class MonthlyTasksAPIView(APIView):
 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
 
         data = (
@@ -41,6 +62,8 @@ class MonthlyTasksAPIView(APIView):
 
 class ProjectStatusAPIView(APIView):
 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
 
         data = {
@@ -55,6 +78,8 @@ class ProjectStatusAPIView(APIView):
 
 class TaskStatusAPIView(APIView):
 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
 
         data = {
@@ -67,6 +92,8 @@ class TaskStatusAPIView(APIView):
 
 
 class OverdueTasksAPIView(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
 
@@ -84,6 +111,8 @@ class OverdueTasksAPIView(APIView):
 
 
 class HighPriorityTasksAPIView(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
 
